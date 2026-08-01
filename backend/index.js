@@ -44,12 +44,14 @@ const PORT = process.env.PORT || 5000;
 
 
 
+
 // =======================
 // GLOBAL MIDDLEWARE
 // =======================
 
 
 app.use(express.json());
+
 
 
 app.use(
@@ -96,8 +98,6 @@ app.use(
 
 
 
-// Test Swagger paths
-
 console.log("Swagger Routes:");
 console.log(swaggerSpec.paths);
 
@@ -116,6 +116,7 @@ app.use(
  "/api/auth",
  authRouter
 );
+
 
 
 app.use(
@@ -164,7 +165,6 @@ app.use(
 
 
 
-
 // =======================
 // HEALTH CHECK
 // =======================
@@ -189,26 +189,68 @@ app.get(
 );
 
 
-// Isticmaal DNS public ah
 
 
-// Server fronted in Production
-// console.log("MONGO_URI =", process.env.MONGO_URI);
+
+
+// =======================
+// FRONTEND PRODUCTION
+// =======================
+
+
 console.log("NODE_ENV =", process.env.NODE_ENV);
 console.log("MONGO_URI_DEV =", process.env.MONGO_URI_DEV);
 console.log("MONGO_URI_PRO =", process.env.MONGO_URI_PRO);
+
+
+
 if (process.env.NODE_ENV === "production") {
 
-    const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+    const __dirname = path.dirname(
+        fileURLToPath(import.meta.url)
+    );
 
-    // Serve the frontend app
+
+
+    app.use(
+        express.static(
+            path.join(
+                __dirname,
+                "../frontend/dist"
+            )
+        )
+    );
+
+
 
     app.get(/.*/, (req, res) => {
-        res.send(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
-    })
+
+
+        res.sendFile(
+
+            path.join(
+
+                __dirname,
+
+                "..",
+
+                "frontend",
+
+                "dist",
+
+                "index.html"
+
+            )
+
+        );
+
+
+    });
+
+
 }
+
 
 
 
@@ -241,62 +283,39 @@ app.use(errorHandler);
 
 
 
-mongoose.connect(process.env.NODE_ENV == "development"?process.env.MONGO_URI_DEV : process.env.MONGO_URI_PRO)
+mongoose
+.connect(
+
+ process.env.NODE_ENV == "development"
+ ? process.env.MONGO_URI_DEV
+ : process.env.MONGO_URI_PRO
+
+)
 
 .then(()=>{
-    console.log('✅MongoDB connected')
+
+
+    console.log(
+        "✅MongoDB connected"
+    );
+
+
+    app.listen(PORT, ()=>{
+
+        console.log(
+            `server is running on port ${PORT}`
+        );
+
+    });
+
 
 })
+
 .catch((err)=>{
-    console.log('❌MongoDB connection error:', err)
+
+    console.log(
+        "❌MongoDB connection error:",
+        err
+    );
+
 });
-
-app.listen(PORT, ()=>{
-    console.log(`server is running on port ${PORT}`)
-})
-
-
-
-
-
-
-
-// mongoose
-// .connect(process.env.MONG_URL)
-
-// .then(()=>{
-
-
-//  console.log("✅ MongoDB connected");
-
-
-
-//  app.listen(PORT,()=>{
-
-
-//   console.log(
-//    `🚀 Server running on port ${PORT}`
-//   );
-
-
-//   console.log(
-//    `📚 Swagger Docs: http://localhost:${PORT}/api-docs`
-//   );
-
-
-//  });
-
-
-// })
-
-
-// .catch((error)=>{
-
-
-//  console.log(
-//   "❌ MongoDB Error:",
-//   error.message
-//  );
-
-
-// });
