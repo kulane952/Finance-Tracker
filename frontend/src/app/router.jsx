@@ -18,6 +18,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 // =====================
 
 import Login from "@/pages/dashboard/auth/Login";
+import Register from "@/pages/dashboard/auth/Register";
 
 
 
@@ -39,24 +40,11 @@ import Settings from "@/pages/dashboard/Settings";
 // Admin Pages
 // =====================
 
-// import AdminDashboard from "@/pages/dashboard/AdminDashboard";
-
-// import UsersTable from "@/components/admin/UsersTable";
-
-// import AdminTransaction from "@/components/admin/AdminTransaction";
-
-// import AdminAnalytics from "@/pages/admin/AdminAnalytics";
-
-// import AdminSettings from "@/pages/admin/AdminSettings";
-
-
 import AdminDashboard from "@/pages/dashboard/AdminDashboard";
 import UsersTable from "@/components/admin/UsersTable";
 import AdminTransaction from "@/components/admin/AdminTransaction";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
 import AdminProfile from "@/components/admin/AdminProfile";
-import Register from "@/pages/dashboard/auth/Register";
-
 
 
 
@@ -66,165 +54,166 @@ const router = createBrowserRouter([
 
 
 
-// =====================
-// LOGIN
-// =====================
+  // =====================
+  // AUTH ROUTES
+  // =====================
 
-{
-  path:"/",
-  element:<Login/>
-},
 
-{
-  path:"/register",
-  element:<Register/>
-},
+  {
+    path:"/",
+    element:<Login/>
+  },
 
 
+  {
+    path:"/register",
+    element:<Register/>
+  },
 
 
 
-// =====================
-// ADMIN ROUTES
-// =====================
 
-{
- path:"/admin",
 
- element:<AdminLayout/>,
 
- children:[
+  // =====================
+  // ADMIN ROUTES
+  // =====================
 
- {
-  index:true,
-  element:<AdminDashboard/>
- },
 
- {
-  path:"users",
-  element:<UsersTable/>
- },
+  {
+    path:"/admin",
 
- {
-  path:"transactions",
-  element:<AdminTransaction/>
- },
+    element:<AdminLayout/>,
 
- {
-  path:"analytics",
-  element:<AdminAnalytics/>
- },
+    children:[
 
- {
-  path:"profile",
-  element:<AdminProfile/>
- },
 
- {
-  path:"settings",
-  element:<AdminProfile/>
- }
+      {
+        index:true,
+        element:<AdminDashboard/>
+      },
 
- ]
 
-},
+      {
+        path:"users",
+        element:<UsersTable/>
+      },
 
 
+      {
+        path:"transactions",
+        element:<AdminTransaction/>
+      },
 
 
+      {
+        path:"analytics",
+        element:<AdminAnalytics/>
+      },
 
 
-// =====================
-// USER DASHBOARD
-// =====================
+      {
+        path:"profile",
+        element:<AdminProfile/>
+      },
 
-{
-  path:"/dashboard",
 
-  element:<DashboardLayout/>,
+      {
+        path:"settings",
+        element:<AdminProfile/>
+      }
 
-  children:[
 
+    ]
 
-    {
-      index:true,
+  },
 
-      element:<Overview/>
-    },
 
 
 
-    {
-      path:"transactions",
 
-      element:<Transactions/>
-    },
 
 
 
-    {
-      path:"budgets",
+  // =====================
+  // USER DASHBOARD
+  // =====================
 
-      element:<Budgets/>
-    },
 
+  {
+    path:"/dashboard",
 
+    element:<DashboardLayout/>,
 
-    {
-      path:"goals",
+    children:[
 
-      element:<Goals/>
-    },
 
+      {
+        index:true,
+        element:<Overview/>
+      },
 
 
-    {
-      path:"insights",
+      {
+        path:"transactions",
+        element:<Transactions/>
+      },
 
-      element:<Insights/>
-    },
 
+      {
+        path:"budgets",
+        element:<Budgets/>
+      },
 
 
-    {
-      path:"profile",
+      {
+        path:"goals",
+        element:<Goals/>
+      },
 
-      element:<Profile/>
-    },
 
+      {
+        path:"insights",
+        element:<Insights/>
+      },
 
 
-    {
-      path:"settings",
+      {
+        path:"profile",
+        element:<Profile/>
+      },
 
-      element:<Settings/>
-    }
 
+      {
+        path:"settings",
+        element:<Settings/>
+      }
 
 
-  ]
+    ]
 
-},
+  },
 
 
 
 
 
 
-// =====================
-// NOT FOUND
-// =====================
 
-{
-  path:"*",
 
-  element:<Navigate to="/" replace/>
-}
+  // =====================
+  // NOT FOUND
+  // =====================
+
+
+  {
+    path:"*",
+    element:<Navigate to="/" replace/>
+  }
 
 
 
 ]);
-
 
 
 export default router;
