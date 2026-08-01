@@ -9,9 +9,16 @@ import api from "@/lib/api";
 import useAuthStore from "@/store/authStore";
 
 
+import {
+  toast
+} from "sonner";
 
 
+
+
+// =====================
 // LOGIN
+// =====================
 
 export function useLogin(){
 
@@ -20,6 +27,7 @@ export function useLogin(){
   useAuthStore(
     (state)=>state.login
   );
+
 
 
   return useMutation({
@@ -41,16 +49,43 @@ export function useLogin(){
     },
 
 
+
     onSuccess:(data)=>{
 
 
       loginStore(
+
         data.user,
+
         data.token
+
+      );
+
+
+
+      toast.success(
+        "Login successful 🎉"
+      );
+
+
+    },
+
+
+
+    onError:(error)=>{
+
+
+      toast.error(
+
+        error.response?.data?.message ||
+
+        "Login failed"
+
       );
 
 
     }
+
 
 
   });
@@ -64,9 +99,15 @@ export function useLogin(){
 
 
 
+
+
+// =====================
 // REGISTER
+// =====================
+
 
 export function useRegister(){
+
 
 
   const loginStore =
@@ -76,7 +117,9 @@ export function useRegister(){
 
 
 
+
   return useMutation({
+
 
 
     mutationFn:async(data)=>{
@@ -84,8 +127,11 @@ export function useRegister(){
 
       const res =
       await api.post(
+
         "/auth/register",
+
         data
+
       );
 
 
@@ -95,16 +141,36 @@ export function useRegister(){
     },
 
 
+
+
+
     onSuccess:(data)=>{
 
 
+
       loginStore(
+
         data.user,
+
         data.token
+
       );
 
 
+
+      toast.success(
+
+        "Account created successfully 🎉"
+
+      );
+
+
+
     },
+
+
+
+
 
 
     onError:(error)=>{
@@ -116,10 +182,25 @@ export function useRegister(){
       );
 
 
+
+      const message =
+
+      error.response?.data?.message ||
+
+      "Registration failed";
+
+
+
+      toast.error(message);
+
+
+
     }
 
 
+
   });
+
 
 
 }
