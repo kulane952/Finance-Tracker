@@ -55,6 +55,7 @@ import UsersTable from "@/components/admin/UsersTable";
 import AdminTransaction from "@/components/admin/AdminTransaction";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
 import AdminProfile from "@/components/admin/AdminProfile";
+import Register from "@/pages/dashboard/auth/Register";
 
 
 
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
 {
   path:"/",
   element:<Login/>
+},
+
+{
+  path:"/register",
+  element:<Register/>
 },
 
 
